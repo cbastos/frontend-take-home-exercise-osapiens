@@ -28,6 +28,10 @@
     "react-scripts": "5.0.1"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/jest": "^30.0.0",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "@types/react-router-dom": "^5.3.3",
@@ -38,8 +42,27 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test --env=jsdom --watchAll=false --coverage",
     "eject": "react-scripts eject"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/components/AppHeader/index.tsx",
+      "src/components/AvatarMenu/index.tsx",
+      "src/pages/Home/index.tsx",
+      "src/pages/AccessDenied/index.tsx",
+      "src/api/services/User/store.ts",
+      "src/utils/global.ts",
+      "src/utils/router.ts"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    }
   },
   "browserslist": [
     ">0.2%",
