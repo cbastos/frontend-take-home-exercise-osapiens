@@ -28,6 +28,19 @@ jest.mock("react-i18next", () => ({
 }));
 
 describe("Home", () => {
+  it("does not trigger React key warning for list items", () => {
+    const errorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+
+    render(<Home />);
+
+    expect(
+      errorSpy.mock.calls.some((args) =>
+        String(args[0]).includes('Each child in a list should have a unique "key" prop')
+      )
+    ).toBe(false);
+    errorSpy.mockRestore();
+  });
+
   it("renders welcome text and translated issue list", () => {
     render(<Home />);
 
@@ -46,6 +59,6 @@ describe("Home", () => {
   it("renders intro text with a bold segment", () => {
     render(<Home />);
 
-    expect(screen.getByText("known")).toBeInTheDocument();
+    expect(screen.getByText("known", { selector: "b" })).toBeInTheDocument();
   });
 });

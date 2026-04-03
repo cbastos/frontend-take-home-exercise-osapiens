@@ -87,4 +87,20 @@ describe("AppHeader", () => {
     expect(screen.getAllByText("00:00").length).toBeGreaterThan(0);
     jest.useRealTimers();
   });
+
+  it("cleans up interval on unmount", () => {
+    jest.useFakeTimers();
+    const clearIntervalSpy = jest.spyOn(window, "clearInterval");
+    const view = render(
+      <ThemeProvider theme={osapiens.light}>
+        <AppHeader user={{ eMail: "user@example.com" }} pageTitle="Page title" />
+      </ThemeProvider>
+    );
+
+    view.unmount();
+
+    expect(clearIntervalSpy).toHaveBeenCalledTimes(1);
+    clearIntervalSpy.mockRestore();
+    jest.useRealTimers();
+  });
 });
