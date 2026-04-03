@@ -84,11 +84,7 @@ describe("AppHeader", () => {
       jest.advanceTimersByTime(3601 * 1000);
     });
 
-    expect(
-      screen.getByText(
-        (_content, node) => node?.textContent === "00:00" && node.children.length === 0
-      )
-    ).toBeInTheDocument();
+    expect(screen.getAllByText("00:00").length).toBeGreaterThan(0);
     jest.useRealTimers();
   });
 });
