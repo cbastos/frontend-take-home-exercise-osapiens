@@ -1,4 +1,4 @@
-import { Grow, Box, Theme, Toolbar, Typography } from "@mui/material";
+import { Grow, Box, Button, Theme, Toolbar, Typography } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import { styled, useTheme } from "@mui/material/styles";
 import React, { useEffect, useState } from "react";
@@ -31,8 +31,13 @@ const AppBar = styled(MuiAppBar)<AppBarProps>(({ theme }) => ({
 
 const AppHeader = React.forwardRef((props: AppHeaderProps, ref) => {
   const { user, pageTitle } = props;
-  const { t } = useTranslation("app");
+  const { t, i18n } = useTranslation("app");
   const theme = useTheme();
+  const currentLanguage = (i18n.language || "en").split("-")[0];
+
+  const handleLanguageChange = (language: string) => {
+    i18n.changeLanguage(language);
+  };
 
   const [count, setCount] = useState(0);
   const hours = 1;
@@ -83,7 +88,23 @@ const AppHeader = React.forwardRef((props: AppHeaderProps, ref) => {
               {pageTitle.toLocaleUpperCase()}
             </Typography>
           </Box>
-          <Box sx={{ flex: 1, justifyContent: "flex-end", display: "flex" }}>
+          <Box sx={{ flex: 1, justifyContent: "flex-end", display: "flex", gap: 1 }}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+              <Button
+                size="small"
+                variant={currentLanguage === "en" ? "contained" : "text"}
+                onClick={() => handleLanguageChange("en")}
+              >
+                EN
+              </Button>
+              <Button
+                size="small"
+                variant={currentLanguage === "de" ? "contained" : "text"}
+                onClick={() => handleLanguageChange("de")}
+              >
+                DE
+              </Button>
+            </Box>
             {user && user.eMail && (
               <Grow in={Boolean(user && user.eMail)}>
                 <Box>

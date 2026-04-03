@@ -10,38 +10,35 @@ const Home = () => {
   const { t } = useTranslation("app");
   const issues = [
     {
+      key: "listIssue1",
       icon: "🐞",
-      title:
-        'Console error: Warning: Each child in a list should have a unique "key" prop.',
-      description:
-        "Hope you are able to find what is causing this error, as it is annoying.",
+      title: t("home.issues.listIssue1.title"),
+      description: t("home.issues.listIssue1.description")
     },
     {
+      key: "listIssue2",
       icon: "🐞",
-      title:
-        'The word "known" should be displayed bold in the introduction text.',
-      description:
-        "When implementing a solution, please ensure to not change the i18n text.",
+      title: t("home.issues.listIssue2.title"),
+      description: t("home.issues.listIssue2.description")
     },
     {
+      key: "listIssue3",
       icon: "🐞",
-      title:
-        "User avatar in app bar is missing, although user should be fetched on app start correctly.",
-      description:
-        "On app start we load the current user object via a MobX store, but for any reason the user avatar is not displayed in the top right of the app bar. Attention: When solving this issue, you might will be confronted with a second bug.",
+      title: t("home.issues.listIssue3.title"),
+      description: t("home.issues.listIssue3.description")
     },
     {
+      key: "listIssue4",
       icon: "🐞",
-      title: "Optional: Countdown is broken sometimes (hard to reproduce).",
-      description:
-        "Some developers mentioned that the countdown in the app header behaves strange sometimes, but unfortunately they were not able to reproduce this glitch reliably, maybe you find the root cause.",
+      title: t("home.issues.listIssue4.title"),
+      description: t("home.issues.listIssue4.description")
     },
     {
+      key: "listIssue5",
       icon: "⭐️",
-      title: "Optional: It would be great to be able to switch the language.",
-      description:
-        "Please add a language select control in the app bar to swicth the UI language between english and german.",
-    },
+      title: t("home.issues.listIssue5.title"),
+      description: t("home.issues.listIssue5.description")
+    }
   ];
 
   return (
@@ -58,7 +55,7 @@ const Home = () => {
         </Typography>
         <List>
           {issues.map((issue) => (
-            <ListItem key={issue.title}>
+            <ListItem key={issue.key}>
               <Typography variant="h5" sx={{ p: 2 }}>
                 {issue.icon}
               </Typography>

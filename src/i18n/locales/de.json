@@ -1,1 +1,34 @@
-{}
+{
+  "logout": "Abmelden",
+  "appTitle": "Supplier OS Anwendung",
+  "routes": {
+    "/home": "Bug Bounty Herausforderung"
+  },
+  "home": {
+    "welcome": "Willkommen!",
+    "intro": "Dies ist eine Demo-Anwendung mit einigen Fehlern und Glitches, bei der wir hoffen, dass du sie findest. 😃 Hier ist die Liste der <b>bekannten</b> Probleme:",
+    "sidenote": "Alle Bugs haben einen unterschiedlichen Schwierigkeitsgrad und sind ziemlich haeufige Probleme (echte Probleme im Alltag eines React-Developers). Um alle offenen Punkte zu loesen, braucht es verschiedene Faehigkeiten: googeln, Erfahrung, Lesen von Doku und Fehlermeldungen, Kreativitaet und analytisches Denken.",
+    "issues": {
+      "listIssue1": {
+        "title": "Konsolenfehler: Warnung: Jedes Element in einer Liste sollte eine eindeutige \"key\"-Prop haben.",
+        "description": "Ich hoffe, du findest die Ursache dieses Fehlers, denn er ist ziemlich nervig."
+      },
+      "listIssue2": {
+        "title": "Das Wort \"known\" sollte im Einleitungstext fett dargestellt werden.",
+        "description": "Wenn du eine Loesung implementierst, achte bitte darauf, den i18n-Text nicht zu veraendern."
+      },
+      "listIssue3": {
+        "title": "Der Benutzer-Avatar in der App-Bar fehlt, obwohl der Benutzer beim Start korrekt geladen werden sollte.",
+        "description": "Beim App-Start laden wir den aktuellen Benutzer ueber einen MobX-Store, aber aus irgendeinem Grund wird der Avatar oben rechts in der App-Bar nicht angezeigt. Achtung: Beim Loesen dieses Problems koenntest du auf einen zweiten Bug stossen."
+      },
+      "listIssue4": {
+        "title": "Optional: Der Countdown ist manchmal kaputt (schwer reproduzierbar).",
+        "description": "Einige Entwickler haben berichtet, dass sich der Countdown im App-Header gelegentlich seltsam verhaelt, konnten den Glitch aber leider nicht zuverlaessig reproduzieren. Vielleicht findest du die Ursache."
+      },
+      "listIssue5": {
+        "title": "Optional: Es waere toll, die Sprache wechseln zu koennen.",
+        "description": "Bitte fuege in der App-Bar eine Sprachauswahl hinzu, um die UI zwischen Englisch und Deutsch umzuschalten."
+      }
+    }
+  }
+}
