@@ -37,15 +37,19 @@ const AppHeader = React.forwardRef((props: AppHeaderProps, ref) => {
   const [count, setCount] = useState(0);
   const hours = 1;
   const minutes = hours * 60;
-  const seconds = minutes * 60;
-  const countdown = seconds - count;
-  const countdownMinutes = `${~~(countdown / 60)}`.padStart(2, "0");
-  const countdownSeconds = (countdown % 60).toFixed(0).padStart(2, "0");
+  const totalSeconds = minutes * 60;
+  const countdown = Math.max(totalSeconds - count, 0);
+  const countdownMinutes = `${Math.floor(countdown / 60)}`.padStart(2, "0");
+  const countdownSeconds = `${countdown % 60}`.padStart(2, "0");
 
   useEffect(() => {
-    setInterval(() => {
-      setCount((c) => c + 1);
+    const intervalId = window.setInterval(() => {
+      setCount((c) => (c < totalSeconds ? c + 1 : c));
     }, 1000);
+
+    return () => {
+      window.clearInterval(intervalId);
+    };
   }, []);
 
   return (
@@ -82,7 +86,9 @@ const AppHeader = React.forwardRef((props: AppHeaderProps, ref) => {
           <Box sx={{ flex: 1, justifyContent: "flex-end", display: "flex" }}>
             {user && user.eMail && (
               <Grow in={Boolean(user && user.eMail)}>
-                <AvatarMenu user={user} />
+                <Box>
+                  <AvatarMenu user={user} />
+                </Box>
               </Grow>
             )}
           </Box>

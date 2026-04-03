@@ -1,10 +1,12 @@
 export type ResultOrErrorResponse<T> = [T | null, Error | null];
 
-export const resultOrError = async <T>(promise: Promise<T>) => {
+export const resultOrError = async (
+  promise: Promise<any>,
+): Promise<ResultOrErrorResponse<any>> => {
   try {
-    const result: T = await promise;
+    const result = await promise;
     return [result, null];
   } catch (error) {
-    return [null, error];
+    return [null, error instanceof Error ? error : new Error("Unknown error")];
   }
 };

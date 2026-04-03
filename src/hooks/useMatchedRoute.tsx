@@ -20,28 +20,35 @@ interface UseMatchedRouteOptions {
 const useMatchedRoute = (
   routes: ReadonlyArray<TRoute>,
   fallbackComponent?: React.FC,
-  options?: UseMatchedRouteOptions
+  options?: UseMatchedRouteOptions,
 ): {
   route: TRoute;
   params: PathParams | null;
   MatchedElement: JSX.Element;
 } => {
-  const { notFoundComponent, matchOnSubPath, transition = "fade" } =
-    options || {};
+  const {
+    notFoundComponent,
+    matchOnSubPath,
+    transition = "fade",
+  } = options || {};
   const location = useLocation();
   // `exact`, `sensitive` and `strict` options are set to true
   // to ensure type safety.
   const results = routes
-    .map((route: TRoute): {
-      route: TRoute;
-      match: any | null;
-    } => ({
-      route,
-      match: matchPath(location.pathname, {
-        path: route.path,
-        sensitive: !matchOnSubPath
-      })
-    }))
+    .map(
+      (
+        route: TRoute,
+      ): {
+        route: TRoute;
+        match: any | null;
+      } => ({
+        route,
+        match: matchPath(location.pathname, {
+          path: route.path,
+          sensitive: !matchOnSubPath,
+        }),
+      }),
+    )
     .filter(({ match }) => !!match && (matchOnSubPath ? true : match.isExact));
   const [firstResult] = results;
   const { match, route } = firstResult || {};
@@ -52,7 +59,7 @@ const useMatchedRoute = (
     if (transition === "fade") {
       const FadeTransition: React.FC<{ match: any }> = ({
         children,
-        match
+        match,
       }) => (
         <Fade in={match ? true : false} timeout={300} unmountOnExit>
           <Box height={"100%"}>{children}</Box>
@@ -65,7 +72,7 @@ const useMatchedRoute = (
     if (transition === "grow") {
       const GrowTransition: React.FC<{ match: any }> = ({
         children,
-        match
+        match,
       }) => (
         <Grow in={match ? true : false} timeout={300} unmountOnExit>
           <Box height={"100%"}>{children}</Box>
@@ -77,13 +84,20 @@ const useMatchedRoute = (
 
     if (transition.startsWith("slide")) {
       const [, direction] = transition.split("-");
+      const slideDirection =
+        direction === "left" ||
+        direction === "right" ||
+        direction === "up" ||
+        direction === "down"
+          ? direction
+          : "up";
       const SlideTransition: React.FC<{ match: any }> = ({
         children,
-        match
+        match,
       }) => (
         <Slide
           in={match ? true : false}
-          direction={direction as "left" | "right" | "up" | "down"}
+          direction={slideDirection}
           timeout={300}
           unmountOnExit
         >
@@ -93,7 +107,10 @@ const useMatchedRoute = (
 
       return SlideTransition;
     }
-    return (({ children }) => children) as React.FC<{ match: any }>;
+    const NoTransition: React.FC<{ match: any }> = ({ children }) => (
+      <>{children}</>
+    );
+    return NoTransition;
   }, [transition]);
 
   return {
@@ -135,7 +152,7 @@ const useMatchedRoute = (
           </Transition>
         )}
       </Switch>
-    )
+    ),
   };
 };
 

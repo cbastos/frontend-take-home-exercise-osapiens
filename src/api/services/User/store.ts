@@ -1,10 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import {
-  ActionError,
-  ActionResultStatus,
-  ActionSuccess
-} from "../../../types/global";
-import { resultOrError, ResultOrErrorResponse } from "../../../utils/global";
+import { ActionResultStatus } from "../../../types/global";
+import { resultOrError } from "../../../utils/global";
 
 export interface User {
   firstName?: string;
@@ -22,7 +18,7 @@ export default class UserStore {
 
   // actions
   async getOwnUser() {
-    const [result, error] = (await resultOrError(
+    const [result, error] = await resultOrError(
       new Promise((resolve) =>
         setTimeout(
           () =>
@@ -34,29 +30,31 @@ export default class UserStore {
           500
         )
       )
-    )) as ResultOrErrorResponse<User>;
+    );
 
     if (!!error) {
       return {
         status: ActionResultStatus.ERROR,
-        error
-      } as ActionError;
+        error,
+        knownErrors: {}
+      };
     }
 
     if (result) {
       runInAction(() => {
-        this.urser = result;
+        this.user = result;
       });
 
       return {
         status: ActionResultStatus.SUCCESS,
         result: result
-      } as ActionSuccess<User>;
+      };
     }
 
     return {
       status: ActionResultStatus.ERROR,
-      error: "Something went wrong."
-    } as ActionError;
+      error: "Something went wrong.",
+      knownErrors: {}
+    };
   }
 }
