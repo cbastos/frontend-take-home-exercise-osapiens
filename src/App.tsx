@@ -3,8 +3,6 @@ import { SnackbarProvider } from "notistack";
 
 import { HashRouter } from "react-router-dom";
 
-import services from "./api/services";
-
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import StylesProvider from "@mui/styles/StylesProvider";
@@ -17,16 +15,13 @@ import { StoreProvider as UserStoreProvider } from "./api/services/User";
 
 const theme = osapiens.light;
 
-const PREFIX = "App";
+interface CombinedStoreProviderProps {
+  children?: React.ReactNode;
+}
 
-const classes = {
-  success: `${PREFIX}-success`,
-  error: `${PREFIX}-error`,
-  warning: `${PREFIX}-warning`,
-  info: `${PREFIX}-info`
-};
-
-const CombinedStoreProvider: React.FC<{}> = ({ children }) => {
+const CombinedStoreProvider: React.FC<CombinedStoreProviderProps> = ({
+  children
+}) => {
   return <UserStoreProvider>{children}</UserStoreProvider>;
 };
 
@@ -38,15 +33,7 @@ const AppContainer = () => {
       {/* Required to override Material-UI's styles via CSS modules. */}
       <Suspense fallback={<div>loading...</div>}>
         <CombinedStoreProvider>
-          <SnackbarProvider
-            maxSnack={3}
-            classes={{
-              variantSuccess: classes.success,
-              variantError: classes.error,
-              variantWarning: classes.warning,
-              variantInfo: classes.info
-            }}
-          >
+          <SnackbarProvider maxSnack={3}>
             <StylesProvider injectFirst>
               <ThemeProvider theme={theme}>
                 <HashRouter>

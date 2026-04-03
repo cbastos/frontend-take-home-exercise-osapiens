@@ -1,5 +1,6 @@
 import i18n from "i18next";
 import { cloneDeep } from "lodash";
+import type { ReactElement } from "react";
 import { initReactI18next } from "react-i18next";
 import de from "./locales/de.json";
 import en from "./locales/en.json";
@@ -9,7 +10,7 @@ export const FALLBACK_LANGUAGE = "en";
 export interface Language {
   locale: string;
   name: string;
-  icon: JSX.Element;
+  icon: ReactElement;
 }
 
 const getBrowserLanguage = () => {

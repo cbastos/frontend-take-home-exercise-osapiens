@@ -8,7 +8,11 @@ CONTEXT / PROVIDER INIT
 
 const UserStoreContext = createContext<Store | null>(null);
 
-export const StoreProvider: React.FC = (props) => {
+interface StoreProviderProps {
+  children?: React.ReactNode;
+}
+
+export const StoreProvider: React.FC<StoreProviderProps> = (props) => {
   const { children } = props;
 
   return (

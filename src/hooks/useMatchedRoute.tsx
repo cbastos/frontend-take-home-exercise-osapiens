@@ -17,6 +17,11 @@ interface UseMatchedRouteOptions {
     | "slide-right";
 }
 
+interface TransitionProps {
+  match: any;
+  children?: React.ReactNode;
+}
+
 const useMatchedRoute = (
   routes: ReadonlyArray<TRoute>,
   fallbackComponent?: React.FC,
@@ -24,7 +29,7 @@ const useMatchedRoute = (
 ): {
   route: TRoute;
   params: PathParams | null;
-  MatchedElement: JSX.Element;
+  MatchedElement: React.ReactElement;
 } => {
   const {
     notFoundComponent,
@@ -55,9 +60,9 @@ const useMatchedRoute = (
   const Fallback = fallbackComponent;
   const NotFound = notFoundComponent || (() => <>not found</>);
 
-  const Transition: React.FC<{ match: any }> = React.useMemo(() => {
+  const Transition: React.FC<TransitionProps> = React.useMemo(() => {
     if (transition === "fade") {
-      const FadeTransition: React.FC<{ match: any }> = ({
+      const FadeTransition: React.FC<TransitionProps> = ({
         children,
         match,
       }) => (
@@ -70,7 +75,7 @@ const useMatchedRoute = (
     }
 
     if (transition === "grow") {
-      const GrowTransition: React.FC<{ match: any }> = ({
+      const GrowTransition: React.FC<TransitionProps> = ({
         children,
         match,
       }) => (
@@ -91,7 +96,7 @@ const useMatchedRoute = (
         direction === "down"
           ? direction
           : "up";
-      const SlideTransition: React.FC<{ match: any }> = ({
+      const SlideTransition: React.FC<TransitionProps> = ({
         children,
         match,
       }) => (
@@ -107,7 +112,7 @@ const useMatchedRoute = (
 
       return SlideTransition;
     }
-    const NoTransition: React.FC<{ match: any }> = ({ children }) => (
+    const NoTransition: React.FC<TransitionProps> = ({ children }) => (
       <>{children}</>
     );
     return NoTransition;
